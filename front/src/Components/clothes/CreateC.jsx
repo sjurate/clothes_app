@@ -20,6 +20,9 @@ const CreateC = () => {
   };
 
   const addClothesItem = () => {
+    if (type.length < 1 || color.length < 1 || price.length < 1) {
+      return;
+    }
     setCreateData({
       type,
       color,
