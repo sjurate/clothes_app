@@ -1,0 +1,90 @@
+@import "~bootstrap/scss/bootstrap";
+
+.modal {
+  display: block;
+  background-color: #0000005f;
+}
+
+// for home list style
+
+.line__content {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-height: 200px;
+  & .line__content__image {
+    min-width: 200px;
+  }
+  & .line__content__info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    & .line__content__price {
+      color: olivedrab;
+      font-weight: bold;
+    }
+    & .line__content__color {
+      display: flex;
+      gap: 15px;
+    }
+    & .home__buttons > * {
+      margin-right: 10px;
+    }
+  }
+}
+
+.img-bin {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  & img {
+    width: 150px;
+    height: auto;
+    display: block;
+  }
+}
+
+.click-link {
+  cursor: pointer;
+}
+
+.card-small-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  & > * {
+    padding: 10px 20px;
+  }
+}
+
+.no-image {
+  margin-top: 10px;
+  color: grey;
+  border: solid 1px grey;
+  padding: 3px 5px;
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
+  margin: 15px 0;
+  & > * {
+    color: grey;
+  }
+}
+
+.order-status {
+  margin-bottom: 15px;
+}
+
+.manage-order-btns {
+  display: flex;
+  gap: 15px;
+}
+
+.size-select {
+  display: flex;
+  gap: 15px;
+}
