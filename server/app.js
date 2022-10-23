@@ -18,7 +18,7 @@ const con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "siuvykla",
+  database: "siuvyklareg",
 });
 
 //////////////////// LOGIN START /////////////////
@@ -113,13 +113,14 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  const key = uuid.v4();
   const sql = `
-    INSERT INTO users (name, psw)
-    VALUES (?, ?)
-  `;
-  con.query(sql, [req.body.name, md5(req.body.pass)], (err, result) => {
+  INSERT INTO users (name, psw, session)
+  VALUES (?, ?, ?)
+`;
+  con.query(sql, [req.body.name, md5(req.body.pass), key], (err, result) => {
     if (err) throw err;
-    res.send(result);
+    res.send({ msg: "ok", key, text: "Welcome!", type: "info" });
   });
 });
 

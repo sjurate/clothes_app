@@ -56,11 +56,11 @@ function Nav({ status }) {
                       Logout
                     </NavLink>
                   ) : null}
-                  {/* {status === 1 ? (
+                  {status === 1 ? (
                     <NavLink to="/register" className="nav-link">
                       Register
                     </NavLink>
-                  ) : null} */}
+                  ) : null}
                   {status === 1 ? (
                     <NavLink to="/login" className="nav-link">
                       Login

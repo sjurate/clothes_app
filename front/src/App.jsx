@@ -15,7 +15,7 @@ import Orders from "./Components/orders/MainO";
 import MyOrders from "./Components/myorders/MainMO";
 import LoginPage from "./Components/loging/LoginPage";
 import LogoutPage from "./Components/loging/LogoutPage";
-// import RegisterPage from "./Components/register/Main";
+import RegisterPage from "./Components/register/MainR";
 import { authConfig } from "./Functions/auth";
 
 function App() {
@@ -65,10 +65,10 @@ function App() {
             </RequireAuth>
           }
         ></Route>
-        {/* <Route
+        <Route
           path="/register"
           element={<RegisterPage setRoleChange={setRoleChange} />}
-        /> */}
+        />
       </Routes>
     </BrowserRouter>
   );
