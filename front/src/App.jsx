@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import {
   BrowserRouter,
   Route,
@@ -16,60 +17,79 @@ import MyOrders from "./Components/myorders/MainMO";
 import LoginPage from "./Components/loging/LoginPage";
 import LogoutPage from "./Components/loging/LogoutPage";
 import RegisterPage from "./Components/register/MainR";
+import Messages from "./Components/Messages";
 import { authConfig } from "./Functions/auth";
+import MessagesContext from "./Contexts/MessagesContext";
 
 function App() {
   const [roleChange, setRoleChange] = useState(Date.now());
+  const [messages, setMessages] = useState([]);
+
+  const setMsg = useCallback((text) => {
+    const message = {
+      id: uuidv4(),
+      text,
+    };
+    setMessages((prevMessages) => [...prevMessages, message]);
+    setTimeout(() => {
+      setMessages((prevMessages) =>
+        prevMessages.filter((m) => m.id !== message.id)
+      );
+    }, 4000);
+  }, []);
 
   return (
     <BrowserRouter>
-      <ShowNav roleChange={roleChange} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RequireAuth role="user">
-              <Home />
-            </RequireAuth>
-          }
-        ></Route>
-        <Route
-          path="/myorders"
-          element={
-            <RequireAuth role="user">
-              <MyOrders />
-            </RequireAuth>
-          }
-        ></Route>
-        <Route
-          path="/login"
-          element={<LoginPage setRoleChange={setRoleChange} />}
-        />
-        <Route
-          path="/logout"
-          element={<LogoutPage setRoleChange={setRoleChange} />}
-        />
-        <Route
-          path="/clothes"
-          element={
-            <RequireAuth role="admin">
-              <Clothes />
-            </RequireAuth>
-          }
-        ></Route>
-        <Route
-          path="/orders"
-          element={
-            <RequireAuth role="admin">
-              <Orders />
-            </RequireAuth>
-          }
-        ></Route>
-        <Route
-          path="/register"
-          element={<RegisterPage setRoleChange={setRoleChange} />}
-        />
-      </Routes>
+      <MessagesContext.Provider value={{ messages, setMessages, setMsg }}>
+        <ShowNav roleChange={roleChange} />
+        <Messages />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <RequireAuth role="user">
+                <Home />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/myorders"
+            element={
+              <RequireAuth role="user">
+                <MyOrders />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/login"
+            element={<LoginPage setRoleChange={setRoleChange} />}
+          />
+          <Route
+            path="/logout"
+            element={<LogoutPage setRoleChange={setRoleChange} />}
+          />
+          <Route
+            path="/clothes"
+            element={
+              <RequireAuth role="admin">
+                <Clothes />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/orders"
+            element={
+              <RequireAuth role="admin">
+                <Orders />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={<RegisterPage setRoleChange={setRoleChange} />}
+          />
+        </Routes>
+      </MessagesContext.Provider>
     </BrowserRouter>
   );
 }

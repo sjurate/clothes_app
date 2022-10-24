@@ -71,8 +71,6 @@ const MainC = () => {
       });
   }, [deleteData]);
 
-  console.log(deleteData);
-
   return (
     <ClothesContext.Provider
       value={{

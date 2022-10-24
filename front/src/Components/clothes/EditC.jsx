@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import getBase64 from "../../Functions/getBase64";
 import ClothesContext from "../../Contexts/ClothesContext";
+import MessagesContext from "../../Contexts/MessagesContext";
 
 const EditC = () => {
   const [type, setType] = useState("");
@@ -11,6 +12,7 @@ const EditC = () => {
   const fileInput = useRef();
 
   const { setEditData, setModalData, modalData } = useContext(ClothesContext);
+  const { setMsg } = useContext(MessagesContext);
 
   const handlePhoto = () => {
     getBase64(fileInput.current.files[0])
@@ -21,6 +23,22 @@ const EditC = () => {
   };
 
   const editClothesItem = () => {
+    if (type.length === 0 || type.length > 50) {
+      setMsg("Invalid title");
+      return;
+    }
+    if (price.replace(/[^\d.]/, "") !== price || price.length === 0) {
+      setMsg("Invalid price");
+      return;
+    }
+    if (color.length === 0) {
+      setMsg("Must enter a color");
+      return;
+    }
+    if (parseFloat(price) > 99.99) {
+      setMsg("Max price is 99.99 Eur");
+      return;
+    }
     setEditData({
       id: modalData.id,
       type,

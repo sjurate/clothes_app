@@ -1,5 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import ClothesContext from "../../Contexts/ClothesContext";
+import MessagesContext from "../../Contexts/MessagesContext";
 import getBase64 from "../../Functions/getBase64";
 
 const CreateC = () => {
@@ -10,6 +11,7 @@ const CreateC = () => {
   const fileInput = useRef();
 
   const { setCreateData } = useContext(ClothesContext);
+  const { setMsg } = useContext(MessagesContext);
 
   const handlePhoto = () => {
     getBase64(fileInput.current.files[0])
@@ -20,20 +22,34 @@ const CreateC = () => {
   };
 
   const addClothesItem = () => {
-    if (type.length < 1 || color.length < 1 || price.length < 1) {
+    if (type.length === 0 || type.length > 50) {
+      setMsg("Invalid title");
       return;
     }
-    setCreateData({
-      type,
-      color,
-      price: parseFloat(price),
-      image: photoPrint,
-    });
-    setType("");
-    setColor("");
-    setPrice("");
-    setPhotoPrint(null);
-    fileInput.current.value = null;
+    if (price.replace(/[^\d.]/, "") !== price || price.length === 0) {
+      setMsg("Invalid price");
+      return;
+    }
+    if (color.length === 0) {
+      setMsg("Must enter a color");
+      return;
+    }
+    if (parseFloat(price) > 99.99) {
+      setMsg("Max price is 99.99 Eur");
+      return;
+    } else {
+      setCreateData({
+        type,
+        color,
+        price: parseFloat(price),
+        image: photoPrint,
+      });
+      setType("");
+      setColor("");
+      setPrice("");
+      setPhotoPrint(null);
+      fileInput.current.value = null;
+    }
   };
 
   return (
