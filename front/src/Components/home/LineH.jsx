@@ -64,7 +64,6 @@ const LineH = ({ clothe }) => {
             </h3>
             <div
               className="line__content__color click-link"
-              on
               onClick={filterByColor}
             >
               Color: {clothe.color}
