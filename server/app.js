@@ -126,6 +126,20 @@ app.post("/register", (req, res) => {
 
 /////////////////// LOGIN   END ////////////////////
 
+// READ CURRENT USER
+
+app.get("/home/users", (req, res) => {
+  const sql = `
+  SELECT *
+  FROM users
+  WHERE session = ?
+`;
+  con.query(sql, [req.headers["authorization"] || ""], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
 // CREATE ITEM of clothes FOR ADMIN
 
 app.post("/server/clothes", (req, res) => {
@@ -147,12 +161,12 @@ app.post("/server/clothes", (req, res) => {
 
 app.post("/home/orders/:id", (req, res) => {
   const sql = `
-    INSERT INTO orders (size, comment, clothe_id)
-    VALUES (?, ?, ?)
+    INSERT INTO orders (size, comment, user_id, clothe_id)
+    VALUES (?, ?, ?, ?)
     `;
   con.query(
     sql,
-    [req.body.size, req.body.comment, req.params.id],
+    [req.body.size, req.body.comment, req.body.user_id, req.params.id],
     (err, result) => {
       if (err) throw err;
       res.send(result);
@@ -188,9 +202,26 @@ app.get("/home/clothes", (req, res) => {
   });
 });
 
-// READ ORDERS FOR ADMIN AND USERS
+// READ ORDERS FOR USERS
 
-app.get("/home/orders/", (req, res) => {
+app.get("/home/orders/:currentUserId", (req, res) => {
+  const sql = `
+  SELECT o.*, c.type, c.color, c.price
+    FROM orders AS o
+    LEFT JOIN clothes AS c
+    ON o.clothe_id = c.id
+    WHERE o.user_id = ?
+    ORDER BY o.id
+    `;
+  con.query(sql, [req.params.currentUserId], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+//READ ORDERS FOR ADMIN
+
+app.get("/home/orders", (req, res) => {
   const sql = `
   SELECT o.*, c.type, c.color, c.price
     FROM orders AS o

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import getBase64 from "../../Functions/getBase64";
 import ClothesContext from "../../Contexts/ClothesContext";
-import MessagesContext from "../../Contexts/MessagesContext";
+import DataContext from "../../Contexts/DataContext";
 
 const EditC = () => {
   const [type, setType] = useState("");
@@ -12,7 +12,7 @@ const EditC = () => {
   const fileInput = useRef();
 
   const { setEditData, setModalData, modalData } = useContext(ClothesContext);
-  const { setMsg } = useContext(MessagesContext);
+  const { setMsg } = useContext(DataContext);
 
   const handlePhoto = () => {
     getBase64(fileInput.current.files[0])

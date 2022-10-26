@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import ClothesContext from "../../Contexts/ClothesContext";
-import MessagesContext from "../../Contexts/MessagesContext";
+import DataContext from "../../Contexts/DataContext";
 import getBase64 from "../../Functions/getBase64";
 
 const CreateC = () => {
@@ -11,7 +11,7 @@ const CreateC = () => {
   const fileInput = useRef();
 
   const { setCreateData } = useContext(ClothesContext);
-  const { setMsg } = useContext(MessagesContext);
+  const { setMsg } = useContext(DataContext);
 
   const handlePhoto = () => {
     getBase64(fileInput.current.files[0])

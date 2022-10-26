@@ -26,7 +26,6 @@ const MainO = () => {
 
   useEffect(() => {
     axios.get("http://localhost:3003/home/orders", authConfig()).then((res) => {
-      console.log(reList(res.data));
       setOrders(reList(res.data));
     });
   }, [lastUpdate]);

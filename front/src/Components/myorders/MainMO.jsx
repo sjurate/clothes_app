@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import MyOrdersContext from "../../Contexts/MyOrdersContext";
 import ListMO from "./ListMO";
 import { authConfig } from "../../Functions/auth";
+import DataContext from "../../Contexts/DataContext";
 
 const MainMO = () => {
   const [myOrders, setMyOrders] = useState(null);
+
+  const { currentUser } = useContext(DataContext);
+  const currentUserId = currentUser[0].id;
 
   const reList = (data) => {
     const d = new Map();
@@ -22,10 +26,12 @@ const MainMO = () => {
   // READ for list with orders
 
   useEffect(() => {
-    axios.get("http://localhost:3003/home/orders", authConfig()).then((res) => {
-      setMyOrders(reList(res.data));
-    });
-  }, []);
+    axios
+      .get("http://localhost:3003/home/orders/" + currentUserId, authConfig())
+      .then((res) => {
+        setMyOrders(reList(res.data));
+      });
+  }, [currentUserId]);
 
   return (
     <MyOrdersContext.Provider

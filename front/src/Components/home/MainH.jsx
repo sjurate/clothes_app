@@ -25,10 +25,8 @@ const MainH = () => {
                 : { ...d, show: false, row: i }
             )
           );
-          console.log(`atrenka: `);
         } else {
           setClothes(res.data.map((d, i) => ({ ...d, show: true, row: i })));
-          console.log(res.data);
         }
       });
   }, [lastUpdate]);

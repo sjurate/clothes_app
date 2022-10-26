@@ -1,13 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Navigate,
-  //useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import "./App.scss";
 import Nav from "./Components/Nav";
 import Home from "./Components/home/MainH";
@@ -19,11 +13,18 @@ import LogoutPage from "./Components/loging/LogoutPage";
 import RegisterPage from "./Components/register/MainR";
 import Messages from "./Components/Messages";
 import { authConfig } from "./Functions/auth";
-import MessagesContext from "./Contexts/MessagesContext";
+import DataContext from "./Contexts/DataContext";
 
 function App() {
   const [roleChange, setRoleChange] = useState(Date.now());
+  const [currentUser, setCurrentUser] = useState(null);
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3003/home/users/", authConfig()).then((res) => {
+      setCurrentUser(res.data);
+    });
+  }, [roleChange]);
 
   const setMsg = useCallback((text) => {
     const message = {
@@ -40,7 +41,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <MessagesContext.Provider value={{ messages, setMessages, setMsg }}>
+      <DataContext.Provider
+        value={{ messages, setMessages, setMsg, currentUser }}
+      >
         <ShowNav roleChange={roleChange} />
         <Messages />
         <Routes>
@@ -89,7 +92,7 @@ function App() {
             element={<RegisterPage setRoleChange={setRoleChange} />}
           />
         </Routes>
-      </MessagesContext.Provider>
+      </DataContext.Provider>
     </BrowserRouter>
   );
 }

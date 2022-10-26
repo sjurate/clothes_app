@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import HomeContext from "../../Contexts/HomeContext";
+import DataContext from "../../Contexts/DataContext";
 import sizes from "../../data/sizes";
 
 const CreateH = () => {
@@ -11,12 +12,14 @@ const CreateH = () => {
   const [photoPrint, setPhotoPrint] = useState("");
 
   const { setOrder, setModalData, modalData } = useContext(HomeContext);
+  const { currentUser } = useContext(DataContext);
 
   const handleOrder = () => {
     setOrder({
       size,
       comment,
       clothe_id: modalData.id,
+      user_id: currentUser[0].id,
       status: 0,
     });
     setModalData(null);

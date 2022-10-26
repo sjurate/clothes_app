@@ -14,6 +14,7 @@ function LoginPage({ setRoleChange }) {
       setRoleChange(Date.now());
       if (res.data.msg === "ok") {
         login(res.data.key);
+
         navigate("/", { replace: true });
       }
     });

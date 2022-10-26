@@ -1,8 +1,6 @@
 import React from "react";
 
 const LineMO = ({ order }) => {
-  console.log(order);
-
   return (
     order.length > 0 && (
       <li className="list-group-item">

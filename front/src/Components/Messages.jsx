@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import MessagesContext from "../Contexts/MessagesContext";
+import MessagesContext from "../Contexts/DataContext";
 
 const Messages = () => {
   const { messages, setMessages } = useContext(MessagesContext);
