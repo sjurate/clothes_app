@@ -19,6 +19,7 @@ function App() {
   const [roleChange, setRoleChange] = useState(Date.now());
   const [currentUser, setCurrentUser] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [showLinks, setShowLinks] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:3003/home/users/", authConfig()).then((res) => {
@@ -42,7 +43,14 @@ function App() {
   return (
     <BrowserRouter>
       <DataContext.Provider
-        value={{ messages, setMessages, setMsg, currentUser }}
+        value={{
+          messages,
+          setMessages,
+          setMsg,
+          currentUser,
+          showLinks,
+          setShowLinks,
+        }}
       >
         <ShowNav roleChange={roleChange} />
         <Messages />

@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import OrdersContext from "../../Contexts/OrdersContext";
 import ListO from "./ListO";
 import { authConfig } from "../../Functions/auth";
+import DataContext from "../../Contexts/DataContext";
 
 const MainO = () => {
   const [orders, setOrders] = useState(null);
   const [order, setOrder] = useState(null);
   const [deleteData, setDeleteData] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+  const { setShowLinks } = useContext(DataContext);
 
   const reList = (data) => {
     const d = new Map();
@@ -71,7 +74,7 @@ const MainO = () => {
         setDeleteData,
       }}
     >
-      <div className="container">
+      <div className="container" onClick={() => setShowLinks(false)}>
         <div className="row">
           <div className="col col-lg-10 col-md-12 col-sm-12">
             <ListO />

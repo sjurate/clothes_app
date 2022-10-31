@@ -99,3 +99,37 @@
     margin: 10px;
   }
 }
+
+.menu-btn {
+  display: none;
+}
+
+.navbar #hidden {
+  display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+  .menu-btn {
+    display: block;
+
+    border: 2px solid white;
+    border-radius: 4px;
+  }
+
+  .navbar-nav {
+    display: none;
+  }
+
+  .navbar #hidden {
+    position: absolute;
+    left: 0px;
+    top: 56px;
+    max-height: 250px;
+    width: 100%;
+    background-color: #212529;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+  }
+}

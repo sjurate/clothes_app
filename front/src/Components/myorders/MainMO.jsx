@@ -8,7 +8,7 @@ import DataContext from "../../Contexts/DataContext";
 const MainMO = () => {
   const [myOrders, setMyOrders] = useState(null);
 
-  const { currentUser } = useContext(DataContext);
+  const { currentUser, setShowLinks } = useContext(DataContext);
   const currentUserId = currentUser[0].id;
 
   const reList = (data) => {
@@ -39,7 +39,7 @@ const MainMO = () => {
         myOrders,
       }}
     >
-      <div className="container">
+      <div className="container" onClick={() => setShowLinks(false)}>
         <div className="row">
           <div className="col col-lg-10 col-md-12 col-sm-12">
             <ListMO />

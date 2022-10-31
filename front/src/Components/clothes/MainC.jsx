@@ -5,6 +5,8 @@ import CreateC from "./CreateC";
 import ListC from "./ListC";
 import EditC from "./EditC";
 import { authConfig } from "../../Functions/auth";
+import { useContext } from "react";
+import DataContext from "../../Contexts/DataContext";
 
 const MainC = () => {
   const [clothes, setClothes] = useState(null);
@@ -14,6 +16,8 @@ const MainC = () => {
   const [editData, setEditData] = useState(null);
 
   const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+  const { setShowLinks } = useContext(DataContext);
 
   // CREATE ITEM
 
@@ -83,7 +87,7 @@ const MainC = () => {
         modalData,
       }}
     >
-      <div className="container">
+      <div className="container" onClick={() => setShowLinks(false)}>
         <div className="row">
           <div className="col col-lg-4 col-md-12">
             <CreateC />

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import HomeContext from "../../Contexts/HomeContext";
 import ListH from "./ListH";
 import CreateH from "./CreateH";
 import { authConfig } from "../../Functions/auth";
+import DataContext from "../../Contexts/DataContext";
 
 const MainH = () => {
   const [clothes, setClothes] = useState(null);
@@ -12,6 +13,8 @@ const MainH = () => {
   const [order, setOrder] = useState(null);
   const filterOn = useRef(false);
   const filterWhat = useRef(null);
+
+  const { setShowLinks } = useContext(DataContext);
 
   useEffect(() => {
     axios
@@ -60,7 +63,7 @@ const MainH = () => {
         filterWhat,
       }}
     >
-      <div className="container">
+      <div className="container" onClick={() => setShowLinks(false)}>
         <div className="row">
           <div className="col col-lg-10 col-md-12 col-sm-12">
             <ListH />
